@@ -1,5 +1,5 @@
 ---
 layout: category
-title: Machine Learning
-permalink: /machine-learning/
+title: ML
+permalink: /ml/
 ---
