@@ -1,5 +1,5 @@
 ---
 layout: category
 title: ML
-permalink: /ml/
+permalink: /ML/
 ---
