@@ -1,1 +1,62 @@
-theme: minimal
+site: SHA1512  
+url: 5handilya.github.io/SHA1512
+title: SHA1512
+description: Simple and minimalistic jekyll blogging theme.
+twitter:
+  username: 5handilya
+  card: summary
+  creator: 5handilya
+author:
+  twitter: 5handilya
+  name: "kunal shandilya"
+  avatar:
+  email: kunalshandilyawork@gmail.com
+  url: #yoururl
+permalink: pretty
+
+baseurl: ""
+
+highlighter: none
+
+exclude:
+  - .jekyll-cache
+  
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+
+sass:
+  sass_dir:          _sass
+  style:            :compressed
+
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap  
+
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:slug
+  
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
