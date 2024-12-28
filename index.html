@@ -14,14 +14,12 @@
     <button 
         id="clickButton" 
         class="button-style" 
-        hx-get="fishing-toggle.html"
-        hx-target="#gone-fishing-text"
-        hx-swap="innerHTML"
-        hx-trigger="click">
-        🔔
+        hx-get="fishing-content.html"
+        hx-target="#gone-fishing-textholder"
+        hx-swap="outerHTML">
+        ring bell 
     </button>
-    <div id="gone-fishing-text" class="text-style">
-        "init gone fishing"
+    <div id="gone-fishing-textholder" class="text-style hidden">
     </div>
   </body>
 </html>
