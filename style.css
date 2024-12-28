@@ -10,7 +10,7 @@
     font-weight: normal;
     font-style: normal;
 }
-@font-face{
+/* @font-face{
     font-family: "d_regular";
     src: url('./fonts/d_regular.otf');
     font-weight: normal;
@@ -27,7 +27,7 @@
     src: url('./fonts/p_regular.otf');
     font-weight: normal;
     font-style: normal;
-}
+} */
 a:link {
     color: white;
     text-decoration: none;
@@ -194,6 +194,7 @@ body {
     width: 90vw;
     margin-right: 0px;
     margin-left: 0px;
+    margin-top: -15px;
     color: white;
 }
 .hidden {
