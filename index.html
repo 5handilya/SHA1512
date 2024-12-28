@@ -11,18 +11,13 @@
   <body>
     <div id="content-container">
         <h1>🔱</h1>
-        <h3>SHA1512</h3>
+        <h2>SHA1512</h2>
         <p class="subtitle">Kunal Shandilya's CS Blog</p>
-        <button 
-            id="bell_button" 
-            class="button-style" 
-            hx-get="gone-fishing-text.html"
-            hx-target="#fishing-text-holder"
-            hx-swap="innerHTML">
-            ring bell
-        </button>
-        <div id="fishing-text-holder" class="text-style">
-        </div>
+        <body>
+          <hr width="100%">
+          <div id="blog-list" hx-get="posts/list.html" hx-trigger="load" hx-swap="outerHTML"></div>
+          <div id="post-content"></div>
+        </body>
     </div>
   </body>
 </html>
