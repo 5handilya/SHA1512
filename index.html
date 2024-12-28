@@ -10,16 +10,16 @@
   <body>
     <div id="content-container">
       <h3>🔱 Kunal Shandilya's CS Blog 🔱</h3>
-    </div>
-    <button 
-        id="clickButton" 
-        class="button-style" 
-        hx-get="fishing-content.html"
-        hx-target="#gone-fishing-textholder"
-        hx-swap="outerHTML">
-        ring bell 
-    </button>
-    <div id="gone-fishing-textholder" class="text-style hidden">
+      <button 
+          id="bell_button" 
+          class="button-style" 
+          hx-get="gone-fishing-text.html"
+          hx-target="#fishing-text-holder"
+          hx-swap="innerHTML">
+          ring bell
+      </button>
+      <div id="fishing-text-holder" class="text-style hidden">
+      </div>
     </div>
   </body>
 </html>
