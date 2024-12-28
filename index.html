@@ -9,12 +9,12 @@
     <script src="htmx.min.js"></script>
   </head>
   <body>
+    <hr>
     <div id="content-container">
         <h1>🔱</h1>
         <h2>SHA1512</h2>
         <p class="subtitle">Kunal Shandilya's CS Blog</p>
         <body>
-          <hr width="100%">
           <div id="blog-list" hx-get="posts/list.html" hx-trigger="load" hx-swap="innerHTML"></div>
           <div id="post-content"></div>
         </body>
