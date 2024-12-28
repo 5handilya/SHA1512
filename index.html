@@ -10,18 +10,13 @@
            console.log(evt)
         })
       </script>
-  </head>
-  <body>
-    <button
-      hx-get="/click_handler"
-      hx-target="#content-container"
-      hx-swap="innerHTML"
-    >
-      ring bell
-    </button>
-
-    <div id="content-container">
-      <p>Kunal Shandilya's CS Blog</p>
-    </div>
+</head>
+<body>
+  <div id="content-container">
+    <p>Kunal Shandilya's CS Blog</p>
+  </div>
+        <button id="clickButton" class="button-style">Click me</button>
+        <div id="text-container" class="text-style hidden">Gone fishing, come again later</div>
+        </body>
   </body>
 </html>
