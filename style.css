@@ -1,5 +1,35 @@
+@font-face{
+    font-family: "hiragino_w3";
+    src: url('./fonts/hiragino_w3.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: "hiragino_w6";
+    src: url('./fonts/hiragino_w6.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: "d_regular";
+    src: url('./fonts/d_regular.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: "d_medium";
+    src: url('./fonts/d_medium.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: "p_regular";
+    src: url('./fonts/p_regular.otf');
+    font-weight: normal;
+    font-style: normal;
+}
 a:link {
-    color: lightgoldenrodyellow;
+    color: white;
     text-decoration: none;
 }
 a:visited {
@@ -44,18 +74,20 @@ a:active {
     text-align: left;
     font-size: 1em;
     color: #ffffff;
+    font-family: Arial;
 }
 .blog-header h1{
-    font-family: "garamond", serif;
+    font-family: "hiragino_w3", serif;
     color: gold;
     margin-top: 33px;
 }
 .blog-header-text h2{
-    font-family: "garamond", serif;
+    font-family: "hiragino_w6", serif;
     color: gold;
     margin-top: 22px;
 }
 .blog-post-title{
+    font-family: "helvetica", Arial;
     text-align: center;
     font-size: 1em;
     color: gold;
@@ -63,7 +95,7 @@ a:active {
     align-items: center;
 }
 .blog-post-body{
-    color: #eeeeee;
+    color: #ffffff;
     background-color: #000000;
     margin-left: 20%;
     margin-right: 20%;
@@ -76,25 +108,6 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
-.blog-list-item{
-    display: flex;
-    width: 100%;
-    text-decoration: none;
-}
-.blog-list-item span{
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 0;
-}
-.blog-list-item .post-title{
-    width: 80%;
-    text-align: left;
-}
-.blog-list-item .post-date{
-    width: 20%;
-    background-color: pink;
-    text-align: left;
-}
 .blog-table{
     border-collapse: collapse;
     margin: 20px;
@@ -103,6 +116,7 @@ body {
     color: white;
 }
 .blog-table th{
+    font-family: "hiragino_w6", serif;
     padding: 10px;
     border: #444444 1px solid;
     font-weight: bold; 
@@ -113,6 +127,7 @@ body {
     padding: 10px;
     text-align: left;
     border: #444444 1px solid;
+    font-family: Arial;
 }
 .blog-table tr:nth-child(even) {
     background-color: #222222;
@@ -145,12 +160,12 @@ body {
     /* height:5px; */
     background-color: #000000;
     color: white;
-    font-family:"Garamond", serif;
     font-size: 1em;
 }
 .category-tab-button {
     background-color: black ;
-    color: white;
+    font-family: "hiragino_w3", serif;
+    color: lightgoldenrodyellow;
     border: 1px white solid;
     padding: 5px 10px;
     text-align: center;
@@ -158,9 +173,9 @@ body {
     display: inline-block;
     font-size: 0.8em;
     margin: 4px 2px;
-    width: 120px;
+    width: 130px;
     cursor: pointer;
-    transition: background-color 0.5s;
+    transition: background-color 0.8s;
 }
 .category-tab-button:hover {
     border: 1px gold solid;
@@ -202,7 +217,7 @@ hr {
     /* background-color: #f9f9f9; */
 }
 .subtitle{
-        margin-top: -10px;
-        font-size: 0.8em;
+        margin-top: -20px;
+        font-size: 0.92em;
         color: #dddddd;
 }
