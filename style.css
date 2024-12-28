@@ -7,7 +7,17 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.subtitle{
+    font-size: 0.8em;
+    color: #aaaaaa;
+    font-style: italic;
+}
+
 .button-style {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
     background-color: white;
     color: black;
     border: 1px black solid;
@@ -15,7 +25,7 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 0.8em;
     margin: 4px 2px;
     cursor: pointer;
     transition: background-color 0.5s;
@@ -27,7 +37,7 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 0.8em;
     margin: 4px 2px;
     cursor: pointer;
 }
