@@ -1,3 +1,10 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
 .button-style {
     background-color: blue; /* Green */
     border: 5px;
