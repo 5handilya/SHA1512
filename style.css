@@ -6,35 +6,29 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
-
 a:link {
-  color: gold; /* Color for unvisited link */
-  text-decoration: none; /* Optional: remove underline */
+  color: gold;
+  text-decoration: none;
 }
-
 a:visited {
-  color: gold; /* Color for visited link */
-  text-decoration: none; /* Optional: remove underline */
+  color: gold;
+  text-decoration: none;
 }
-
 a:hover {
-  color: salmon; /* Color when the mouse hovers over the link */
-  text-decoration: underline; /* Optional: underline on hover */
+  color: salmon;
+  text-decoration: underline;
 }
-
 a:active {
-  color: red; /* Color when the link is being clicked */
-  text-decoration: none; /* Optional: remove underline when clicked */
+  color: red;
+  text-decoration: none;
 }
-
 hr {
-  width: 100vw; /* Ensure the <hr> spans the entire viewport width */
-  height: 1px;  /* Set height of the <hr> */
-  border: none; /* Remove default border */
-  background-color: #444444; /* Set the color of the line */
-  margin: 20px 0; /* Optional: Adjust the space around the <hr> */
+  width: 100vw;
+  height: 1px;
+  border: none;
+  background-color: #444444;
+  margin: 20px 0;
 }
-
 .blog-header{
     height: 40px;
     width: 90%;
@@ -55,20 +49,16 @@ hr {
     font-size: 1em;
     color: #ffffff;
 }
-
-.blog-header-text-title{
-    font-size: 1;
+.blog-header-text h2{
     font-family: "Garamond", serif;
     color: gold;
     margin-top: 22px;
 }
-
 .subtitle{
     margin-top: -10px;
     font-size: 0.8em;
     color: #dddddd;
 }
-
 .button-style {
     position: absolute;
     top: 50%; 
@@ -86,7 +76,6 @@ hr {
     cursor: pointer;
     transition: background-color 0.5s;
 }
-
 .button-style:hover {
     border: 1px blue solid;
     padding: 15px 32px;
@@ -97,7 +86,6 @@ hr {
     margin: 4px 2px;
     cursor: pointer;
 }
-
 .text-style {
     padding: 20px;
     margin-top: 20px;
@@ -108,29 +96,16 @@ hr {
     color: black;
     /* background-color: #f9f9f9; */
 }
-
 .hidden {
     display: none;
 }
-
-.blog-post-head{
-    height:5px;
+.blog-post-title{
     text-align: center;
     font-size: 1em;
     color: gold;
     background-color: #000000;
-    display:flex;
-    width: 80vw;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
 }
-.blog-post-head h2{
-    font-size: 1.5em;
-    font-family: "Garamond", serif;
-    color: gold;
-}
-
 .blog-post-body{
     color: #eeeeee;
     background-color: #000000;
