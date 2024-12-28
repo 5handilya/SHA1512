@@ -10,22 +10,22 @@
   </head>
   <body>
     <div class="blog-header">
-        <div class="blog-header-text"> 
-          <h2>SHA1512</h2>
-          <p class="subtitle">Kunal Shandilya</p>
-        </div>
-        <h1>🔱</h1>
+      <div class="blog-header-text"> 
+        <h2>SHA1512</h2>
+        <p class="subtitle">Kunal Shandilya</p>
+      </div>
+      <h1>🔱</h1>
     </div>
     <hr>
     <div id="category-tabs" class="category-tabs">
       <button class="category-tab-button" onclick="window.location.href='index.html'">
-        > Home
+        Home
       </button>
       <button class="category-tab-button" onclick="window.location.href='index-ds.html'">
         Data Science
       </button>
       <button class="category-tab-button" onclick="window.location.href='index-mle.html'">
-        ML Engineering
+        > ML Engineering
       </button>
       <button class="category-tab-button" onclick="window.location.href='index-mlr.html'">
         ML Playground
@@ -36,13 +36,10 @@
       <button class="category-tab-button" onclick="window.location.href='about.html'">
         About 
       </button>
-      <button class="category-tab-button" onclick="window.location.href='about.html'">
-        Contact 
     </div>
     </div>
-    <!-- <hr background-color="#000000"> -->
     <div id="content-container" class="content-container">
-      <div id="blog-list" hx-get="posts/list.html" hx-trigger="revealed" hx-swap="innerHTML" class="content-container-entries"></div>
+      <div id="blog-list" hx-get="posts/list.html" hx-trigger="load" hx-swap="innerHTML"></div>
     </div>
   </body>
 </html>
