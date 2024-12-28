@@ -1,23 +1,65 @@
 body {
     display: flex;
-    justify-content: center;
     width: 100%;
+    background-color: #000000;
     align-items: center;
     flex-direction: column;
     text-align: center;
     font-family: Arial, sans-serif;
 }
-hr {
-  width: 100%;
-  height: 1px; /* Adjust the height of the line */
-  border: none; /* Remove any default border */
-  background-color: black; /* Adjust the color of the line */
-  margin: 20px 0; /* Optional, adds space around the <hr> */
+
+a:link {
+  color: gold; /* Color for unvisited link */
+  text-decoration: none; /* Optional: remove underline */
 }
+
+a:visited {
+  color: gold; /* Color for visited link */
+  text-decoration: none; /* Optional: remove underline */
+}
+
+a:hover {
+  color: salmon; /* Color when the mouse hovers over the link */
+  text-decoration: underline; /* Optional: underline on hover */
+}
+
+a:active {
+  color: red; /* Color when the link is being clicked */
+  text-decoration: none; /* Optional: remove underline when clicked */
+}
+
+hr {
+  width: 100vw; /* Ensure the <hr> spans the entire viewport width */
+  height: 1px;  /* Set height of the <hr> */
+  border: none; /* Remove default border */
+  background-color: #444444; /* Set the color of the line */
+  margin: 20px 0; /* Optional: Adjust the space around the <hr> */
+}
+
+.blog-header{
+    display:flex;
+    width: 90vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.blog-header-text{
+    display:flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 1em;
+    color: #ffffff;
+}
+
+.blog-header-text-title{
+    font-size: 1;
+    font-family: "Garamond", serif;
+    color: gold;
+}
+
 .subtitle{
     font-size: 0.8em;
-    color: #aaaaaa;
-    font-style: italic;
+    color: #dddddd;
 }
 
 .button-style {

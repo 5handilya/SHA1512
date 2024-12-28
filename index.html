@@ -9,15 +9,16 @@
     <script src="htmx.min.js"></script>
   </head>
   <body>
-    <div id="content-container">
+    <div id="blog-header" class="blog-header">
+      <div class="blog-header-text"> 
+        <h2 class="blog-header-text-title">SHA1512</h2>
+        <p class="subtitle">Kunal Shandilya's CS Blog</p>
+      </div>
       <h1>🔱</h1>
-      <h2>SHA1512</h2>
-      <p class="subtitle">Kunal Shandilya's CS Blog</p>
-      <hr>
-        <body>
-          <div id="blog-list" hx-get="posts/list.html" hx-trigger="load" hx-swap="innerHTML"></div>
-          <div id="post-content"></div>
-        </body>
+    </div>
+    <hr>
+    <div id="content-container" width="100%" class="content-container">
+      <div id="blog-list" hx-get="posts/list.html" hx-trigger="load" hx-swap="innerHTML"></div>
     </div>
   </body>
 </html>
