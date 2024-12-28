@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTMX Example</title>
-    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <title>SHA1512</title>
+    <script src="htmx.min.js"></script>
       <script>
         document.body.addEventListener('htmx:configRequest', (evt) => {
            console.log(evt)
@@ -17,11 +17,11 @@
       hx-target="#content-container"
       hx-swap="innerHTML"
     >
-      Click Me!
+      ring bell
     </button>
 
     <div id="content-container">
-      <p>This is a placeholder</p>
+      <p>Kunal Shandilya's CS Blog</p>
     </div>
   </body>
 </html>
