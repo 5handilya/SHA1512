@@ -8,10 +8,10 @@ body {
 }
 
 .button-style {
-    background-color: blue;
-    border: none;
+    background-color: white;
+    border: black;
     border-radius: 5px;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -23,17 +23,18 @@ body {
 }
 
 .button-style:hover {
-    background-color: darkblue;
+    background-color: #eeeeee;
+    color: white;
 }
 
 .text-style {
     padding: 20px;
     margin-top: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
+    /* border: 2px solid #ccc; */
+    /* border-radius: 5px; */
     display: block;
     text-align: center;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
 }
 
 .hidden {
