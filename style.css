@@ -129,6 +129,8 @@ body {
     text-align: left;
     border: #444444 1px solid;
     font-family: Arial;
+}
+.blog-table tr{
     font-size: 0.9em;
 }
 .blog-table tr:nth-child(even) {
