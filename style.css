@@ -33,11 +33,11 @@ a:link {
     text-decoration: none;
 }
 a:visited {
-    color: lightgoldenrodyellow;
+    color: lemonchiffon;
     text-decoration: none;
 }
 a:hover {
-    color: salmon;
+    color: gold;
     text-decoration: underline;
 }
 a:active {
@@ -45,13 +45,14 @@ a:active {
     text-decoration: none;
 }
 .blog-header{
+    align-items: center;
+    
     height: 40px;
     width: 90vw;
     display:flex;
     gap: 0px;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
 }
 .blog-header-link{
     height: fit-content;
@@ -112,7 +113,7 @@ body {
     border-collapse: collapse;
     margin: 20px;
     width: 90vw;
-    border: #444444 2px solid;
+    border: rgb(90, 68, 18) 2px solid;
     color: white;
 }
 .blog-table th{
@@ -187,14 +188,23 @@ body {
     margin: 4px 2px;
     cursor: pointer;
 }
+.category-title-header{
+    align-self: start;
+    font-family: "hiragino_w6", serif;
+    color: white;
+    font-size: 1.1em;
+    margin-left: 5vw;
+    margin-top: 0px;
+}
 .content-container {
+    max-width: 90vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 90vw;
     margin-right: 0px;
     margin-left: 0px;
-    margin-top: -15px;
+    margin-top: -20px;
     color: white;
 }
 .hidden {
