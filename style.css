@@ -182,7 +182,7 @@ body {
 .blog-table th{
     font-family: "hiragino_w6", serif;
     padding: 10px;
-    border: none;
+    /* border: none; */
     font-weight: bold; 
     color: white;
     text-align: left;
