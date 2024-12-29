@@ -153,6 +153,7 @@ a:active {
     margin-top: 22px;
 }
 .blog-post-content{
+    margin-top: -30px;
     margin-left: 20%;
     margin-right: 20%;
 }
