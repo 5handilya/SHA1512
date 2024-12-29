@@ -28,6 +28,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face{
+    font-family: "jbm";
+    src: url('./fonts/jbm-all.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 a:link {
     color: rgb(255, 254, 244);
     text-decoration: none;
@@ -160,7 +166,7 @@ a:active {
     align-items: center;
 }
 .blog-post-body{
-    font-family: "p_regular", Arial;
+    font-family: Arial;
     color: #cfd0c7;
     background-color: #000000;
 }
@@ -262,6 +268,13 @@ body {
     color: #deded0;
     font-size: 1.1em;
 }
+code {
+    font-family: "jbm", "Consolas", monospace;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+    color: #dddddd;
+}
 .content-container {
     max-width: 90vw;
     display: flex;
@@ -283,6 +296,19 @@ hr {
     background-color: gold;
     margin: 20px 0;
 }
+.image-grid {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 10px; 
+        padding: 10px;
+    }
+    .image-grid img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
 .text-style {
     padding: 20px;
     margin-top: 20px;
@@ -302,5 +328,15 @@ hr {
     font-family: "p_regular", "Arial";
     margin-top: -25px;
     font-size: 0.9em;
+    color: #dddddd;
+}
+pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    margin: 10px;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #444444; 
+    font-family: "Consolas", monospace;
     color: #dddddd;
 }

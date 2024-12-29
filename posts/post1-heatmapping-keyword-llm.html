@@ -1,0 +1,83 @@
+ <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="/htmx.min.js"></script>
+</head>
+<body>
+    <div class="blog-header" hx-get="/header.html" hx-swap="innerHTML" hx-trigger="load"></div>
+    <hr>    
+    <div class="blog-post-content">
+        <div class="blog-post-title">
+            <span><p style="font-size:2em;">LLM Random Walk Patterns: A Visual Exploration</p></span>
+            <span><p style="margin-top:-20px">2024-12-29</p></span>
+        </div>
+        <div class="blog-post-body">
+             <p>Recently, I've been exploring how language models handle randomness. I performed a simple experiment: ask LLMs to perform random walks on a 2-dimensional grid while keeping specific keywords in mind, then visualize their movement patterns using heatmaps.</p>
+
+            <h3>Experiment</h3>
+
+            <p>The setup is straightforward – the LLM is asked to move on a 2D grid by choosing one direction (up, down, left, right, or stay) at each step. To ensure fairness and prevent any inherent bias in the prompt structure, I randomly shuffle the order of direction options before each prompt.</p>
+
+            <pre><code>
+direction_strings = random.shuffle(['left', 'right', 'up', 'down', 'stay'])
+
+prompt = f"""Remember the word "{keyword}". 
+You are on a random walk on a 2-dimensional plane. 
+Your current position (x,y) is {str(current_pos)}. 
+You must pick one direction to move in from the following python list of strings: {direction_strings}. 
+Respond with one word only. Do not use punctuation."""
+            </code></pre>
+            <pre><code>
+keywords = ["", "order", "chaos", "perfect", "imperfect", "straight up", "curvy", "x", "positive x", "negative x", "y", "positive y", "negative y", "left", "right", "down", "up", "not up", "not down", "north", "south", "east", "west", "fast", "slow", "center", "left edge", "right edge", "hot", "cold"]
+            </code></pre>
+            <p style="font-style: italic;">(full code <a href="https://github.com/5handilya/MLR/tree/main/2024-12-llm-heatmap-exp" target="_blank">here</a>)</p>
+
+            <h3>Findings</h3>
+            <p>I tested several models with temperature = 1 & no limits on output tokens. Varying temperatures did not seem to show promising variation, so I varied models instead of temperature. Models and results:</p>
+            <ol>
+                <li><b>Gemma-2-9b-it-SimPO</b>: The most extensively tested model (50 iterations, 50 steps). While the -X shyness was disappointing, directoinal keywords created interesting patterns in the heatmap. More abstract keywords like "chaos" and "order" also produced distinct patterns.
+                    <div class="image-grid">
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-no-keyword.jpg" alt="heatmap-gemma-9b-simpo-1-no-keyword" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-up.jpg" alt="heatmap-gemma-9b-simpo-1-up" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-order.jpg" alt="heatmap-gemma-9bsimpo-1-order" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-chaos.jpg" alt="heatmap-gemma-9bsimpo-1-order" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-curvy.jpg" alt="heatmap-gemma-9bsimpo-1-curvy" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-straight_up.jpg" alt="heatmap-gemma-9bsimpo-1-curvy" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-perfect.jpg" alt="heatmap-gemma-9b-simpo-1-perfect" >
+                        <img src="/posts/images/heatmap-gemma9bsimpo-1-imperfect.jpg" alt="heatmap-gemma-9b-simpo-1-straight_up" >
+                    </div>
+                </li>
+                <li><b>Gemma-2-2b</b>: While the iterations weren't as extensive, this model made my favourite heatmaps of all. The -X shyness continued, though.
+                    <div class="image-grid">
+                        <img src="/posts/images/heatmap-gemma2-2b-1-.jpg" alt="heatmap-gemma2-2b-1-" >
+                        <img src="/posts/images/heatmap-gemma2-2b-1-curvy.jpg" alt="heatmap-gemma2-2b-1-curvy" >
+                        <img src="/posts/images/heatmap-gemma2-2b-1-chaos.jpg" alt="heatmap-gemma2-2b-1-chaos" >
+                        <img src="/posts/images/heatmap-gemma2-2b-1-order.jpg" alt="heatmap-gemma2-2b-1-order" >
+                        <img src="/posts/images/heatmap-gemma2-2b-1-hot.jpg" alt="heatmap-gemma2-2b-1-hot" >
+                        <img src="/posts/images/heatmap-gemma2-2b-1-cold.jpg" alt="heatmap-gemma2-2b-1-cold" >
+                    </div>
+                </li>
+                <li>
+                   <b>Other Models</b> (Qwen 2.5, LLaMA 3.2 3B, Hermes 3 3B): These were all disappointing. Notably, LLaMA 3.3 70B (!) and Nous Research's Hermes 3:3B exhibited deterministic behavior, often getting stuck in repetitive direction choices or refusing to pick a word from the given direction choices, instead saying "north" repeatedly (hermes).
+                    <div class="image-grid">
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-japan.jpg" alt="heatmap-qwen2dot5-1dot5B-1-japan" >
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-america.jpg" alt="heatmap-qwen2dot5-1dot5B-1-america" >
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-order.jpg" alt="heatmap-qwen2dot5-1dot5B-1-order" >
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-chaos.jpg" alt="heatmap-qwen2dot5-1dot5B-1-chaos" >
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-perfect.jpg" alt="heatmap-qwen2dot5-1dot5B-1-perfect" >
+                        <img src="/posts/images/heatmap-qwen2dot5-1dot5B-1-dirty.jpg" alt="heatmap-qwen2dot5-1dot5B-1-dirty" >
+                    </div>
+
+                </li>
+            </ol>
+
+            <h3>Conclusion</h3>
+            <p>While I was disappointed by most models sticking to a few quadrants or directions, I found the patterns moulded by keywords fascinating. It is worth exploring whether informing the LLM that its heatmap will be observed would influence the maps. 
+            </p>
+            <p>This experiment also brought up interesting questions about how LLMs treat concepts of randomness and direction in general. I plan to extend this study to more quintessential examples of randomness, such as number generation and lottery-like scenarios, to better understand these patterns.</p>
+         </div>
+      </div>
+   <hr>
+</body>
