@@ -152,8 +152,12 @@ a:active {
     color: gold;
     margin-top: 22px;
 }
+.blog-post-content{
+    margin-left: 20%;
+    margin-right: 20%;
+}
 .blog-post-title{
-    font-family: "helvetica", Arial;
+    font-family: "hiragino_w3", Arial;
     text-align: center;
     font-size: 1em;
     color: gold;
@@ -161,17 +165,16 @@ a:active {
     align-items: center;
 }
 .blog-post-body{
-    color: #ffffff;
+    font-family: "p_regular", Arial;
+    color: #dddddd;
     background-color: #000000;
-    margin-left: 20%;
-    margin-right: 20%;
 }
 body {
     display: flex;
     background-color: #000000;
     align-items: center;
     flex-direction: column;
-    text-align: center;
+    text-align: start;
     font-family: Arial, sans-serif;
 }
 .blog-table{
