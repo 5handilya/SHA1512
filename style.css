@@ -199,8 +199,11 @@ body {
 .blog-table tr:nth-child(even) {
     background-color: #222222;
 }
-.blog-table td:nth-child(1){
-    border-top:none;
+.blog-table tr:nth-child(1){
+    border-top: none;
+}
+.blog-table td:nth-child(1) {
+    width: 90%;
 }
 .blog-table td:nth-child(2){
     max-width: fit-content;
