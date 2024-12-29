@@ -155,8 +155,7 @@ a:active {
 }
 .blog-post-content{
     margin-top: -30px;
-    margin-left: 20%;
-    margin-right: 20%;
+    width: 90%;
 }
 .blog-post-title{
     font-family: "hiragino_w3", Arial;
