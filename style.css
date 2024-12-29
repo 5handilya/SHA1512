@@ -156,6 +156,7 @@ a:active {
 .blog-post-content{
     margin-top: -30px;
     width: 90%;
+    max-width: 720px;
 }
 .blog-post-title{
     font-family: "hiragino_w3", Arial;
@@ -263,10 +264,8 @@ body {
 .category-title-header{
     align-self: start;
     font-family: "hiragino_w3", serif;
-    color: #dddddd;
+    color: #deded0;
     font-size: 1.1em;
-    margin-left: 4.5vw;
-    margin-top: -10px;
 }
 .content-container {
     max-width: 90vw;
