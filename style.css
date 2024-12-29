@@ -132,13 +132,18 @@ body {
 }
 .blog-table tr{
     font-size: 0.9em;
+    font-family: Arial;
 }
 .blog-table tr:nth-child(even) {
     background-color: #222222;
 }
 .blog-table td:nth-child(1) {
-  width: 85%;
+  width: 90%;
   text-align: left;
+}
+.blog-table td:nth-child(2){
+    min-width: fit-content;
+    color: #eeeeee;
 }
 .blog-list-item{
     color: white;
