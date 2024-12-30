@@ -81,7 +81,7 @@ a:active {
     padding: 5px;
 }
 .about-table td:nth-child(1) {
-    width: 30vw;
+    width: 100px;
     text-align: left;
 }
 .about-table td:nth-child(2){
