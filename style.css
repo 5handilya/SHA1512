@@ -102,7 +102,7 @@ a:active {
     width: 100%;
     font-family: 'd_regular', Helvetica, Arial, sans-serif;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
      .about-tables-container {
         flex-direction: row;
         /* justify-content: space-between; */
