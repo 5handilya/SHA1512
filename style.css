@@ -59,7 +59,7 @@ a:active {
 }
 .about-table th{
     font-family: "Arial", serif;
-    font-weight: normal;
+    font-weight: 500;
     padding: 5px;
     border: #444444 1px solid;
     color: #ececda;
