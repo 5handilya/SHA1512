@@ -58,10 +58,11 @@ a:active {
     color: white;
 }
 .about-table th{
-    font-family: "hiragino_w3", serif;
+    font-family: "hiragino_w6", serif;
+    font-weight: normal;
     padding: 5px;
     border: #444444 1px solid;
-    color: white;
+    color: #dedec9;
     font-size: 1.1em;
     text-align: left;
     border-left: none;
@@ -266,7 +267,7 @@ body {
 .category-title-header{
     align-self: start;
     font-family: "hiragino_w3", serif;
-    color: #deded0;
+    color: #eeeeee;
     font-size: 1.1em;
 }
 code {
