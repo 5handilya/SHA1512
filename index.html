@@ -12,8 +12,15 @@
     <div class="about-fragment" hx-get="/about-fragment.html" hx-swap="innerHTML" hx-trigger="load"></div>
     <!-- <div class="blog-header" hx-get="/header.html" hx-swap="innerHTML" hx-trigger="load"></div> -->
     <div id="content-container" class="content-container">
-      <p style="margin:0px; margin-top:50px; margin-bottom:-10px" class="category-title-header">Posts</p>
+
+      <p style="margin:0px; margin-top:60px; margin-bottom:-10px" class="category-title-header">Pinned</p>
+
+      <div id="pinned-blog-list" hx-get="./posts/list-pinned.html" hx-trigger="revealed" hx-swap="innerHTML" class="content-container-entries"></div>
+
+      <p style="margin:0px; margin-bottom:-10px" class="category-title-header">Recent</p>
+
       <div id="blog-list" hx-get="./posts/list.html" hx-trigger="revealed" hx-swap="innerHTML" class="content-container-entries"></div>
+
     </div>
   </body>
 </html>
