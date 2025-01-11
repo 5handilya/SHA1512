@@ -1,0 +1,89 @@
+ <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="/htmx.min.js"></script>
+</head>
+<body>
+    <div class="blog-header" hx-get="/header.html" hx-swap="innerHTML" hx-trigger="load"></div>
+    <hr>    
+    <div class="blog-post-content">
+        <div class="blog-post-title">
+            <span><p style="font-size:2em;">Kaggle Playground Series S4E12: Regression with an Insurance Dataset</p></span>
+            <span><p style="margin-top:-20px">2024-12-29</p></span>
+        </div>
+        <div class="blog-post-body">
+                <p>
+                        This is a somewhat delayed account of a harrowing and lovely experience that lasted through NYE. I was waking up and checking scores from my overnight training runs before I had both eyes open, and falling asleep at night studying gradient boosting. I find it easy to romanticize this process: this sifting for gold in large pools of data, of whispering to CSVs and making them confess that the seemingly endless columns of numbers that start to blur together are not nearly as arbitrary as they seem. If you just ask nicely, they will tell you very useful secrets.
+                </p>
+
+                <h2>The Problem</h2>
+                <p>
+                        The task: Predict the <strong>insurance premium</strong> using features like:
+                </p>
+                <ul>
+                        <li>Age, Gender, Annual Income, Marital Status, Number of Dependents</li>
+                        <li>Education Level, Occupation, Health Score, Location</li>
+                        <li>Policy Type, Previous Claims, Vehicle Age, Credit Score</li>
+                        <li>Insurance Duration, Policy Start Date, Customer Feedback</li>
+                        <li>Smoking Status, Exercise Frequency, Property Type</li>
+                </ul>
+                <p>
+                        Prediction is evaluated using <strong>RMSLE</strong>, meaning overestimations are penalized less than underestimations - understandable, given we are estimating insurance premiums.
+                </p>
+
+                <h2>The Data</h2>
+                <p>As a newbie to feature engineering, I kept things simple:</p>
+                <ol>
+                        <li>Transformed missing values into their own category (absence of a data point in something like an insurance form is a data point)</li>
+                        <li>Created interaction features (e.g., <code>Age * Health Score</code>)</li>
+                        <li>Extracted temporal features like the <strong>year</strong> and <strong>day of the week</strong> from <code>Policy Start Date</code></li>
+                </ol>
+                <p>
+                        By ditching mean imputation for missing values, I improved my score to <strong>1.047</strong> from <strong>1.057</strong>.
+                </p>
+
+                <h2>The Strategy</h2>
+
+                <h3>Gradient Boosting with XGBoost</h3>
+                <p>
+                        I learned about gradient boosting and its XGBoost implementation for this project. I see empirically that GB is adept at handling tabular data regression and can capture complex, nonlinear relationships - but I am yet to develop an unmistakably clear intuition on which model to use for which problem.
+                </p>
+                <p>
+                        I also ran some toy MLPs while the real runs were on GCP because why not. It didn't go well— the scores were <strong>1.1+</strong>.
+                        <h3>Hyperparameter Tuning</h3>
+                        <p>
+                                I used a mix of manual tuning (in earlier training runs) and RandomizedSearchCV (in the last training run). I found myself focusing mostly on n_estimators, learning_rate, min_child_depth, and max_depth. I did not experiment much with n_folds and still haven't truly grokked how it affects scores. (I once accidentally set it to 111 instead of 11 and checked GCP on my phone in the morning to see it was still running. lol)
+                        </p>
+                        <pre><code>
+                        # An example of how I hacked together a simple manual scan of hyperparameters
+                        
+                        for i in range(1, 20):
+                        print("STARTING RUN   ", i)
+                        run(3000 + i*250, 0.0005+i*0.0001, 8 + i//4, train_df, test_df)
+                        print("RUN COMPLETE: ", i)
+                        </code></pre>
+                        <pre><code>
+                        # In later runs, I learned about and used RandomizedSearchCV for hyperparameter exploration
+                        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+                        random_search = RandomizedSearchCV(xgb_model, param_distributions=param_dist, n_iter=50, 
+                        scoring='neg_mean_squared_log_error', cv=kf, verbose=1, random_state=42, n_jobs=-1)
+                        random_search.fit(X, y)
+                        </code></pre>
+                        <p>I was basically forced to develop increasingly sane logs of my training runs, and am glad for it:</p>
+                        <img src="/posts/images/2/spreadsheet.png" alt="Spreadsheet Image" style="width:100%; height:auto;">
+                        <p>
+                        I ran the training on Google Cloud. Multithreading the feature engineering step saved 10+ minutes per run—those idle cores deserved better. Watching a 2+ digit core count hit <strong>100% utilization</strong> is so deeply satisfying btw:
+                        </p>
+                        <img src="/posts/images/2/100usage.png" alt="100% CPU Usage" style="width:100%; height:auto;">
+                <h2>The Result</h2>
+                <ul>
+                        <li><strong>Score:</strong> <strong>1.04701</strong></li>
+                <li><strong>Rank:</strong> 534 out of 2392</li>
+                <li><strong>Percentile:</strong> Top ~22%</li>
+                </ul>
+                <img src="/posts/images/2/rank.png" alt="Rank Image" style="width:100%; height:auto;">
+</div>
+<hr>
+</body>
