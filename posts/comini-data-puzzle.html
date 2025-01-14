@@ -1,0 +1,75 @@
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="/htmx.min.js"></script>
+</head>
+<body>
+    <div class="blog-header" hx-get="/header.html" hx-swap="innerHTML" hx-trigger="load"></div>
+    <hr>    
+    <div class="blog-post-content">
+        <div class="blog-post-title">
+            <span><p style="font-size:2em;">Data Puzzle</p></span>
+            <span><p style="margin-top:-20px">2024-1-14</p></span>
+            <span><p style="margin-top:-20px">SWE / ML Engineering Internship Application to Comini</p></span>
+        </div>
+        <div class="blog-post-body">
+           I don't believe I was able to find what was hidden in the data. Here is a clean version of notes taken while exploring the challenge.
+            <br>
+            <br>
+           <img src="/posts/images/misc-comini/data.png" width="300px">
+            <br>
+           <h2>The Data</h1>  
+        <ul>
+            <li>finding it was a simple matter of following the code</li>
+            <li>10000 rows, 7 columns</li>
+            <li>7th column is either 0 (for 9766) or 1 (for 234).</li>
+            <li>First 6 columns have each 0.01 interval from 0.00 to 0.99 exactly 100 times, thus each has a total of 4950</li>
+            <li>No single (1-6) column has an unusually strong correlation with the 7th column</li>
+            <li>This seems procedurally generated</li>
+            <li>The sums of the first 6 or 7 columns taken together don't show a unique distribution</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-distsum6.png" width="300px">
+            <img src="/posts/images/misc-comini/data-distsum7.png" width="300px">
+        </ul>
+        Initial thoughts:
+        <ul>
+            <li>'1' appears a small no. of times, and the indices don't seem to follow a pattern in terms of gap between indices and gaps between gaps -> 1 is used for encoding?</li>
+            <br>
+            <li>10000 could represent 100x100 grid for a 2d map, so i used a normalized sum of the first 6 columns for greyscale and rgb visualizations:</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-greyscale.png" width="100%">
+            <img src="/posts/images/misc-comini/data-rgb.png" width="100%">
+            <br>
+            <br>
+            <li>i tried using column 7 as a binary mask</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-masked.png" width="100%">
+            <br>
+            <br>
+            <li>i tried visualizing the 6 columns as 2 sets of 3D coordinates and 3 sets of 2D coordinates</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-2x3d.png" width="100%">
+            <br>
+            <img src="/posts/images/misc-comini/data-3x2d.png" width="100%">
+            <br>
+            <br>
+            <li>surely not a barcode? (no)</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-barcode.png" width="100%">
+            <br>
+            <br>
+            <li>lastly, here's the first 6 columns represented as vectors in 2D space, with c1,c2 = origin, c3,c4 used to encode rotation, c5,c6 encoding magnitude. somewhat interesting founta-like pattern seen, though that could simply be the result of procedural generation and not be meaningful</li>
+            <br>
+            <img src="/posts/images/misc-comini/data-vectors.png" width="100%">
+            <br>
+            <br>
+            <h2>Conclusion</h2>
+            This challenge was the one I found most fun and spent the most time on. There were many other approaches that I tried but forgot to document, but, sadly, I don't think I found the solution. On the plus side, I had good fun playing with it.
+            <hr>
+        </ul> 
+        <br>
+        </div>
+    </body>
+</html>
