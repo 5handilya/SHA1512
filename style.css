@@ -156,7 +156,7 @@ a:active {
 .blog-post-content{
     margin-top: -30px;
     width: 90%;
-    max-width: 720px;
+    max-width: 1000px;
 }
 .blog-post-title{
     font-family: "hiragino_w3", Arial;
@@ -168,7 +168,8 @@ a:active {
 }
 .blog-post-body{
     font-family: Arial;
-    color: #cfd0c7;
+    color: #c9c9be;
+    font-size: 1.25em;
     background-color: #000000;
 }
 body {
@@ -297,6 +298,9 @@ hr {
     border: none;
     background-color: gold;
     margin: 20px 0;
+}
+h2 {
+    color: #f3f3c3;
 }
 .image-grid {
     margin-bottom: 30px;

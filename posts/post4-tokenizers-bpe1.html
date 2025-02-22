@@ -1,0 +1,138 @@
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="/htmx.min.js"></script>
+</head>
+<body>
+    <div class="blog-header" hx-get="/header.html" hx-swap="innerHTML" hx-trigger="load"></div>
+    <hr>    
+    <div class="blog-post-content">
+        <div class="blog-post-title">
+            <span><p style="font-size:3em;">Building a Basic BPE Tokenizer</p></span>
+            <span><p style="font-size:1.25em; margin-top:-20px">Saturday, 22-02-2024</p></span>
+        </div>
+        <br>
+        <div class="blog-post-body">
+            <p style="justify-self: center;"><em>basics of tokenization studied, simple BPE tokenizer made</em></p>
+            <br>
+            <h2 id="motivation">I. Motivation</h2>
+            <p>At its core, tokenization is the process of converting text into numbers that machine learning models can work with.</p>
+            <p>More specifically:</p>
+            <ol>
+            <li>The input sequence is split into tokens</li>
+            <li>Each token is converted into an integer ID</li>
+            <li>Each ID is mapped to a vector in a high-dimensional space using an embedding matrix</li>
+            <li>Training imbues vectors with relative meanings abstracted from training data</li>
+            </ol>
+            <p>Tokenization is behind several instances of unusual behavior in LLMs, including a <a target="_blank" href="https://x.com/elder_plinius/status/1891980067309342773">single-emoji GPT-4o jailbreak by Pliny the Prompter. </a>It is one of the first components of the training pipeline. Overall, it is interesting and relatively simple to implement. So, I decided to start my foray into ML here.</p>
+            <br>
+            <h2 id="i-why-tokenization-matters">II. How to tokenize?</h2>
+            <blockquote>
+            <p>We need to map members of the input space to numbers. That&#39;s simple: why not just map each character to a number?</p>
+            </blockquote>
+            <p>Now our input sequences will be very long, meaning lots of training data and less efficient training. (concretely, higher memory usage for more integers, smaller effective context window, ^2 more FLOPS for self-attention in Transformers, and probably others I can&#39;t think of)</p>
+            <blockquote>
+            <p>Ok, so let&#39;s take a dictionary and map each word to a unique number?</p>
+            </blockquote>
+            <p>Now our input sequences are shorter (&quot;word&quot; = 1 number instead of 4), but what about words outside this dictionary? What about words outside all dictionaries? If our tokenizer goes UNK ️(unknown word token) every time it sees a word not in its dictionary, we stand to lose information. Also, such a rigid tokenizer would quickly be rendered outdated.</p>
+            <blockquote>
+            <p>Ok, so if whole words and individual characters are on a training-efficiency-vs-input-space-coverage axis of sorts, let&#39;s cut in between with subwords (e.g. f(&quot;transformers&quot;) = [&quot;trans&quot;, &quot;formers&quot;])</p>
+            </blockquote>
+            <p>Yes, this is what methods like byte-pair encoding aim to do by splitting words into frequent subwords that approximate &quot;morphemes,&quot; i.e. atomic units of meaning.</p>
+            <br>
+            <h2 id="ii-byte-pair-encoding-bpe-">III. Byte Pair Encoding (BPE)</h2>
+            <p>BPE strikes a balance between character-level and word-level tokenization that is considered by many frontier labs to be good enough for some of the most expensive software deployments in history. </p>
+            <p>The algorithm iteratively merges the most frequent adjacent pair of bytes or characters into new tokens until a terminal condition (target vocabulary size / number of merges) is met. The goal here is to add those subwords to our vocabulary which will most improve input compression, input space coverage, and atomicity of meaning. We don&#39;t want to add too many items to our vocabulary, lest we make training less efficient for reasons mentioned in section I.</p>
+            <p>Below are implementation notes from a simple BPE tokenizer I made.</p>
+            <h3 id="1-vocabulary-initialization">1. Vocabulary Initialization</h3>
+            <p>A dictionary containing ID : byte mapping is initialized. We are using UTF-8 encoded bytes, and set the dict size to 256 to hold all possible byte values. While fine for a simple implementation like this one, this encoding can result in complications (e.g. splitting of multi-byte characters like emojis, accented letters etc.)</p>
+            <pre><code class="lang-python">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_initialize_vocab</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, ids)</span></span>:
+                    <span class="hljs-comment"># Initialize a id : byte dict with given ids</span>
+                    <span class="hljs-keyword">self</span>.vocab = {<span class="hljs-symbol">id:</span> bytes([id]) <span class="hljs-keyword">for</span> id <span class="hljs-keyword">in</span> range(<span class="hljs-number">256</span>)}
+            </code></pre>
+            <h3 id="2-token-pair-frequency-counting">2. Token Pair Frequency Counting</h3>
+            <pre><code class="lang-python">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_count_token_pairs</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, ids)</span></span>:
+                    <span class="hljs-comment"># Count frequencies of adjacent token pairs</span>
+                    pair_freqs = {}
+                    <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> zip(ids, ids[<span class="hljs-number">1</span><span class="hljs-symbol">:</span>]):
+                        pair_freqs[pair] = pair_freqs.get(pair, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+                    <span class="hljs-keyword">return</span> pair_freqs
+            </code></pre>
+            <h3 id="3-applying-a-merge">3. Applying a Merge</h3>
+            <p>This core function replaces target consecutive ID pairs in the given sequence (if any) with a single new token.</p>
+            <pre><code class="lang-python">    def <span class="hljs-title">_merge</span>_pair(self, tokens, target_pair, new_token):
+                    <span class="hljs-comment"># Apply a merge rule to a sequence of tokens</span>
+                    i = <span class="hljs-number">0</span>
+                    <span class="hljs-built_in">result</span> = []
+                    <span class="hljs-keyword">while</span> i &lt; <span class="hljs-built_in">len</span>(tokens):
+                        <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-built_in">len</span>(tokens) - <span class="hljs-number">1</span>) <span class="hljs-keyword">and</span> ((tokens[i], tokens[i+<span class="hljs-number">1</span>]) == target_pair):
+                            <span class="hljs-built_in">result</span>.append(new_token)
+                            i += <span class="hljs-number">2</span>
+                        <span class="hljs-keyword">else</span>:
+                            <span class="hljs-built_in">result</span>.append(tokens[i])
+                            i += <span class="hljs-number">1</span>
+                    <span class="hljs-literal">return</span> <span class="hljs-built_in">result</span>
+            </code></pre>
+            <h3 id="4-updating-vocabulary-learning-merge-rules">4. Updating Vocabulary &amp; Learning Merge Rules</h3>
+            <p>This maps the most frequent consecutive byte-pair to the merged token in the vocabulary. It also stores the merge rule in a dictionary, which is crucial to the encode function.</p>
+            <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_learn_merge_rule</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, pair, id)</span></span>:
+                    <span class="hljs-comment"># Add a new merge rule for pair of IDs-&gt; ID &amp; update vocabulary</span>
+                    <span class="hljs-keyword">self</span>.merge_rules[pair] = id
+                    <span class="hljs-keyword">self</span>.vocab[id] = <span class="hljs-keyword">self</span>.vocab[pair[<span class="hljs-number">0</span>]] + <span class="hljs-keyword">self</span>.vocab[pair[<span class="hljs-number">1</span>]]
+            </code></pre>
+            <h3 id="5-text-encoding">5. Text Encoding</h3>
+            <p>This function converts text to raw bytes, and applies stored merge rules to it. It is crucial to apply rules from oldest to newest, because newly minted merged-IDs from earlier merges can themselves be inputs to future merges. </p>
+            <pre><code class="lang-python">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encode</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, text)</span></span>:
+                    <span class="hljs-comment"># Convert text to a list of byte values (initial token IDs)</span>
+                    text_bytes = text.encode(<span class="hljs-string">"utf-8"</span>)
+                    ids = list(text_bytes)
+                    <span class="hljs-comment"># Iteratively apply merge rules until no more merges can be performed</span>
+                    <span class="hljs-keyword">while</span> len(ids) &gt;= <span class="hljs-number">2</span>: <span class="hljs-comment"># For sanity, the real break comes from the membership check below</span>
+                        <span class="hljs-comment"># Count occurrences of adjacent token pairs</span>
+                        pair_freqs = <span class="hljs-keyword">self</span>._count_token_pairs(ids)
+                        <span class="hljs-comment"># Identify the earliest mergeable pair in pair_freqs by checking the lowest matching merge rule index</span>
+                        first_pair_to_merge = min(pair_freqs, key=lambda <span class="hljs-symbol">p:</span> <span class="hljs-keyword">self</span>.merge_rules.get(p, float(<span class="hljs-string">"inf"</span>)))
+                        <span class="hljs-comment"># Stop merging if the identified pair is not in the merge rules - no more merges possible</span>
+                        <span class="hljs-keyword">if</span> first_pair_to_merge <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">merge_rules:</span>
+                            <span class="hljs-keyword">break</span>
+                        <span class="hljs-comment"># Apply the merge</span>
+                        merged_id = <span class="hljs-keyword">self</span>.merge_rules[first_pair_to_merge]
+                        ids = <span class="hljs-keyword">self</span>._merge_pair(ids, first_pair_to_merge, merged_id)
+                    <span class="hljs-keyword">return</span> ids
+            </code></pre>
+            <h3 id="6-decoding-">6. Decoding:</h3>
+            <p>Lastly, to decode ID sequences to text, we simply look up the vocabulary dictionary containing (original and merged) ID -> byte relations.</p>
+            <pre><code class="lang-python">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decode</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, ids)</span></span>:
+                    <span class="hljs-comment"># decode the byte sequence corresponding to each ID using vocab</span>
+                    text_bytes = b<span class="hljs-string">""</span>.join(<span class="hljs-keyword">self</span>.vocab[id] <span class="hljs-keyword">for</span> id <span class="hljs-keyword">in</span> ids)
+                    text = text_bytes.decode(<span class="hljs-string">"utf-8"</span>, errors=<span class="hljs-string">"replace"</span>)
+                    <span class="hljs-keyword">return</span> text
+            </code></pre>
+            <br>
+            <h2 id="7-the-demo">IV. Demo & Conclusion </h2>
+            <iframe width="960" height="540"
+            src="https://www.youtube.com/embed/f6gxo3loxII">
+        </iframe> 
+        <p>This particular tokenizer was trained on over 60,000 lines of Shakespeare, with a target vocabulary size of 1000. It successfully learns merge rules from training data and applies them to input text. The compression ratio and sequence length comparisons confirm its effectiveness.</p>
+            <br>
+            <p style="justify-self: center;">
+                That&#39;s all for this basic BPE tokenizer.<span> <em><a target="_blank" href="https://github.com/5handilya/MLE/blob/main/tokenizers/bpe/bpe1.py">Full code here.</a></em></span> Thank you for reading!</p>
+            <br>
+            <hr style="background-color: wheat;">
+            <p><strong>What I'll be doing next in tokenizers:</strong></p>
+            <ul>
+            <li>Karpathy&#39;s GPT-2 Tokenizer vid</li>
+            <li>HF tokenizers: study codebase</li>
+            <li>Tiktoken: study codebase</li>
+            <li>SentencePiece: study & implement</li>
+            <li>WordPiece: study & implement</li>
+            <li>Making a visualizer with stats, tunable params, choose-your-tokenizer</li>
+            <li>Making a fast production-grade tokenizer</li>
+            <li>...</li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+</body>
